@@ -74,6 +74,8 @@
             this.shapesList.Name = "shapesList";
             this.shapesList.Size = new System.Drawing.Size(200, 368);
             this.shapesList.TabIndex = 3;
+            this.shapesList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.shapesList_KeyPress);
+            this.shapesList.SelectedValueChanged += new System.EventHandler(this.shapesList_SelectedValueChanged);
             // 
             // Form1
             // 

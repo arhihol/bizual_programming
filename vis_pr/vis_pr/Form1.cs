@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace vis_pr
 {
@@ -18,12 +19,18 @@ namespace vis_pr
 
         List<Shapes> Shapes = new List<Shapes>();
         Shapes tempShape;
+
         Pen p_osn = new Pen(Color.Black);
-        Point xy = new Point();
         Pen p_ris = new Pen(Color.Gray);
+        Pen p_sel = new Pen(Color.Red);
+
+        Point xy = new Point();
+
         Point xy_line_1 = new Point();
         Point xy_line_2 = new Point();
+
         Boolean flg_fig = false;
+
         Point Cen_okr = new Point();
         Point xy_okr = new Point();
 
@@ -84,6 +91,10 @@ namespace vis_pr
             {
                 p.DrawWith(e.Graphics, p_osn);
             }
+            foreach (int i in shapesList.SelectedIndices)
+            {
+                Shapes[i].DrawWith(e.Graphics, p_sel);
+            }
         }
 
         private void addShape(Shapes shape)
@@ -131,6 +142,23 @@ namespace vis_pr
                     Cen_okr.X = xy_okr.X;
                     Cen_okr.Y = xy_okr.Y;
                     tempShape = new Circle(Cen_okr, xy_okr);
+                }
+            }
+        }
+
+        private void shapesList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void shapesList_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 8)
+            {
+                if (shapesList.SelectedIndices.Count > 0)
+                {
+                    Shapes.RemoveAt(shapesList.SelectedIndices[0]);
+                    shapesList.Items.RemoveAt(shapesList.SelectedIndices[0]);
                 }
             }
         }
