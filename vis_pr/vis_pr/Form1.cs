@@ -162,5 +162,50 @@ namespace vis_pr
                 }
             }
         }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string name_file = "test.txt";
+            StreamWriter sv = new StreamWriter(name_file);
+            foreach (Shapes p in this.Shapes)
+            {
+                p.Save(sv);
+            }
+            sv.Close();
+        }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string name_file = "";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                name_file = openFileDialog1.FileName;
+            }
+            StreamReader sr = new StreamReader(name_file);
+
+            while (!sr.EndOfStream)
+            {
+                string type = sr.ReadLine();
+                switch (type)
+                {
+                    case "Cross":
+                        Shapes.Add(new Cross(sr));
+                        break;
+                    case "Line":
+                        Shapes.Add(new Line(sr));
+                        break;
+                    case "Circle":
+                        Shapes.Add(new Circle(sr));
+                        break;
+                }
+            }
+            sr.Close();
+            Refresh();
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

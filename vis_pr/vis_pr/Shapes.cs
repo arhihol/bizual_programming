@@ -13,6 +13,7 @@ namespace vis_pr
     {
         public abstract string DescriptionString { get; }
         public abstract void DrawWith(Graphics g, Pen p);
+        public abstract void Save(StreamWriter sv);
     }
 
     public class Cross : Shapes
@@ -37,6 +38,20 @@ namespace vis_pr
             g.DrawLine(p, XY.X - 3, XY.Y - 3, XY.X + 3, XY.Y + 3);
             g.DrawLine(p, XY.X + 3, XY.Y - 3, XY.X - 3, XY.Y + 3);
         }
+
+        public override void Save(StreamWriter sv)
+        {
+            sv.WriteLine("Cross");
+            sv.WriteLine(Convert.ToString(XY.X) + " " + Convert.ToString(XY.Y));
+        }
+
+        public Cross(StreamReader sr)
+        {
+            String line = sr.ReadLine();
+            string[] foo = line.Split(' ');
+            XY.X = Convert.ToInt32(foo[0]);
+            XY.Y = Convert.ToInt32(foo[1]);
+        }
     }
 
     class Line : Shapes
@@ -60,6 +75,26 @@ namespace vis_pr
         public override void DrawWith(Graphics g, Pen p)
         {
             g.DrawLine(p, A.X, A.Y, B.X, B.Y);
+        }
+
+        public override void Save(StreamWriter sv)
+        {
+            sv.WriteLine("Line");
+            sv.WriteLine(Convert.ToString(A.X) + " " + Convert.ToString(A.Y));
+            sv.WriteLine(Convert.ToString(B.X) + " " + Convert.ToString(B.Y));
+        }
+
+        public Line(StreamReader sr)
+        {
+            string line = sr.ReadLine();
+            string[] foo = line.Split(' ');
+            A.X = Convert.ToInt32(foo[0]);
+            A.Y = Convert.ToInt32(foo[1]);
+
+            line = sr.ReadLine();
+            foo = line.Split(' ');
+            B.X = Convert.ToInt32(foo[0]);
+            B.Y = Convert.ToInt32(foo[1]);
         }
     }
 
@@ -91,6 +126,26 @@ namespace vis_pr
         {
             g.DrawEllipse(p, C.X - this.Radius, C.Y - this.Radius, Radius * 2, Radius * 2);
 
+        }
+
+        public override void Save(StreamWriter sv)
+        {
+            sv.WriteLine("Circle");
+            sv.WriteLine(Convert.ToString(C.X) + " " + Convert.ToString(C.Y));
+            sv.WriteLine(Convert.ToString(R.X) + " " + Convert.ToString(R.Y));
+        }
+
+        public Circle(StreamReader sr)
+        {
+            String circle = sr.ReadLine();
+            string[] foo = circle.Split(' ');
+            C.X = Convert.ToInt32(foo[0]);
+            C.Y = Convert.ToInt32(foo[1]);
+
+            circle = sr.ReadLine();
+            foo = circle.Split(' ');
+            R.X = Convert.ToInt32(foo[0]);
+            R.Y = Convert.ToInt32(foo[1]);
         }
     }
 }
