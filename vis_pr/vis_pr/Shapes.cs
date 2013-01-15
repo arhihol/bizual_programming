@@ -5,7 +5,6 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Text;
 
 namespace vis_pr
 {
@@ -24,7 +23,7 @@ namespace vis_pr
         {
             get
             {
-                return "Cross(X=" + XY.X + ",Y=" + XY.Y + ")";
+                return "Cross(X= " + XY.X + " ,Y= " + XY.Y + " )";
             }
         }
 

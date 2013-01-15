@@ -34,15 +34,21 @@ namespace vis_pr
         Point Cen_okr = new Point();
         Point xy_okr = new Point();
 
+        //Point xy_sel = new Point();
+        //Boolean flg_sel = false;
+        //string[] st;
+
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (radioButton1.Checked)
             {
+                //flg_sel = false;
                 addShape(tempShape);
                 Refresh();
             }
             if (radioButton2.Checked)
             {
+                //flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
@@ -62,6 +68,7 @@ namespace vis_pr
             }
             if (radioButton3.Checked)
             {
+                //flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
@@ -79,6 +86,17 @@ namespace vis_pr
                     Refresh();
                 }
             }
+            //if (radioButton4.Checked)
+            //{
+            //    if (!flg_sel)
+            //    {
+            //        flg_sel = true;
+            //        xy_sel.X = e.X;
+            //        xy_sel.Y = e.Y;
+            //        String ss = Convert.ToString(xy_sel.X) + " " + Convert.ToString(xy_sel.Y);
+            //        textBox1.Text = ss;
+            //    }
+            //}
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -89,8 +107,21 @@ namespace vis_pr
             }
             foreach (Shapes p in this.Shapes)
             {
-                p.DrawWith(e.Graphics, p_osn);
+                p.DrawWith(e.Graphics, p_osn);                               
             }
+            //if (flg_sel)
+            //{
+            //    foreach (Shapes t in this.Shapes)
+            //    {
+            //        t.DrawWith(e.Graphics, p_osn);
+            //        st = t.DescriptionString.Split(' ');
+            //        if ((Convert.ToInt32(st[1]) + 5 > xy_sel.X && Convert.ToInt32(st[1]) - 5 < xy_sel.X) && (Convert.ToInt32(st[3]) + 5 > xy_sel.Y && Convert.ToInt32(st[3]) - 5 < xy_sel.Y))
+            //        {
+            //            MessageBox.Show("true");
+            //            flg_sel = false;
+            //        }
+            //    }
+            //}
             foreach (int i in shapesList.SelectedIndices)
             {
                 Shapes[i].DrawWith(e.Graphics, p_sel);
@@ -144,6 +175,17 @@ namespace vis_pr
                     tempShape = new Circle(Cen_okr, xy_okr);
                 }
             }
+            //if (radioButton4.Checked)
+            //{
+            //    if (!flg_sel)
+            //    {
+            //        flg_sel = true;
+            //        xy_sel.X = e.X;
+            //        xy_sel.Y = e.Y;
+            //        String ss = Convert.ToString(xy_sel.X) + " " + Convert.ToString(xy_sel.Y);
+            //        textBox1.Text = ss;
+            //    }
+            //}
         }
 
         private void shapesList_SelectedValueChanged(object sender, EventArgs e)
@@ -206,6 +248,14 @@ namespace vis_pr
         private void выходToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Shapes.Clear();
+            shapesList.ClearSelected();
+            shapesList.Items.Clear();
+            Refresh();
         }
     }
 }
