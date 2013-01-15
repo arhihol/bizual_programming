@@ -11,14 +11,21 @@ namespace vis_pr
 {
     public abstract class Shapes
     {
-        public abstract string DescriptionString { get; }
         public abstract void DrawWith(Graphics g, Pen p);
-        public abstract void SaveTo(StreamWriter sw);
-        public abstract bool IsNearTo(Point C);
+    }
 
-        protected float getDistance(Point A, Point B)
+    public class Cross : Shapes
+    {
+        Point XY = new Point();
+        public Cross(Point _XY)
         {
-            return (float)Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
+            this.XY = _XY;
+        }
+
+        public override void DrawWith(Graphics g, Pen p)
+        {
+            g.DrawLine(p, XY.X - 3, XY.Y - 3, XY.X + 3, XY.Y + 3);
+            g.DrawLine(p, XY.X + 3, XY.Y - 3, XY.X - 3, XY.Y + 3);
         }
     }
 }
