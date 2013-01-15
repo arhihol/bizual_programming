@@ -31,12 +31,13 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.shapesList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(12, 293);
+            this.radioButton1.Location = new System.Drawing.Point(13, 376);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(32, 17);
             this.radioButton1.TabIndex = 0;
@@ -47,7 +48,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(12, 316);
+            this.radioButton2.Location = new System.Drawing.Point(13, 422);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(28, 17);
             this.radioButton2.TabIndex = 1;
@@ -58,7 +59,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(12, 339);
+            this.radioButton3.Location = new System.Drawing.Point(13, 399);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(33, 17);
             this.radioButton3.TabIndex = 2;
@@ -66,11 +67,20 @@
             this.radioButton3.Text = "O";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
+            // shapesList
+            // 
+            this.shapesList.FormattingEnabled = true;
+            this.shapesList.Location = new System.Drawing.Point(2, 5);
+            this.shapesList.Name = "shapesList";
+            this.shapesList.Size = new System.Drawing.Size(200, 368);
+            this.shapesList.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 398);
+            this.ClientSize = new System.Drawing.Size(625, 448);
+            this.Controls.Add(this.shapesList);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -89,6 +99,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.ListBox shapesList;
     }
 }
 

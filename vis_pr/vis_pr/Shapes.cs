@@ -11,12 +11,22 @@ namespace vis_pr
 {
     public abstract class Shapes
     {
+        public abstract string DescriptionString { get; }
         public abstract void DrawWith(Graphics g, Pen p);
     }
 
     public class Cross : Shapes
     {
         Point XY = new Point();
+
+        public override string DescriptionString
+        {
+            get
+            {
+                return "Cross(X=" + XY.X + ",Y=" + XY.Y + ")";
+            }
+        }
+
         public Cross(Point _XY)
         {
             this.XY = _XY;
@@ -32,6 +42,14 @@ namespace vis_pr
     class Line : Shapes
     {
         private Point A, B;
+
+        public override string DescriptionString
+        {
+            get
+            {
+                return "Line(" + A + "; " + B + ")";
+            }
+        }
 
         public Line(Point _A, Point _B)
         {
@@ -49,6 +67,14 @@ namespace vis_pr
     {
         private Point C, R;
         Pen p = new Pen(Color.Black);
+
+        public override string DescriptionString
+        {
+            get
+            {
+                return "Circle(C=" + C + ",R=" + R + ")";
+            }
+        }
 
         public float Radius
         {

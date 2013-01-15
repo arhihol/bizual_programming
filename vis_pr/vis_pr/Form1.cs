@@ -18,9 +18,9 @@ namespace vis_pr
 
         List<Shapes> Shapes = new List<Shapes>();
         Shapes tempShape;
-        Pen pMain = new Pen(Color.Black);
+        Pen p_osn = new Pen(Color.Black);
         Point xy = new Point();
-        Pen pTemp = new Pen(Color.Gray);
+        Pen p_ris = new Pen(Color.Gray);
         Point xy_line_1 = new Point();
         Point xy_line_2 = new Point();
         Boolean flg_fig = false;
@@ -78,17 +78,18 @@ namespace vis_pr
         {
             if (tempShape != null)
             {
-                tempShape.DrawWith(e.Graphics, pTemp);
+                tempShape.DrawWith(e.Graphics, p_ris);
             }
             foreach (Shapes p in this.Shapes)
             {
-                p.DrawWith(e.Graphics, pMain);
+                p.DrawWith(e.Graphics, p_osn);
             }
         }
 
         private void addShape(Shapes shape)
         {
             Shapes.Add(shape);
+            shapesList.Items.Add(shape.DescriptionString);
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
