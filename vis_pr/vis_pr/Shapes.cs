@@ -28,4 +28,20 @@ namespace vis_pr
             g.DrawLine(p, XY.X + 3, XY.Y - 3, XY.X - 3, XY.Y + 3);
         }
     }
+
+    class Line : Shapes
+    {
+        private Point A, B;
+
+        public Line(Point _A, Point _B)
+        {
+            this.A = _A;
+            this.B = _B;
+        }
+
+        public override void DrawWith(Graphics g, Pen p)
+        {
+            g.DrawLine(p, A.X, A.Y, B.X, B.Y);
+        }
+    }
 }
