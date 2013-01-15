@@ -44,4 +44,27 @@ namespace vis_pr
             g.DrawLine(p, A.X, A.Y, B.X, B.Y);
         }
     }
+
+    class Circle : Shapes
+    {
+        private Point C, R;
+        Pen p = new Pen(Color.Black);
+
+        public float Radius
+        {
+            get { return (float)Math.Sqrt(Math.Pow(R.X - C.X, 2) + Math.Pow(R.Y - C.Y, 2)); }
+        }
+
+        public Circle(Point _C, Point _point_R)
+        {
+            this.C = _C;
+            this.R = _point_R;
+        }
+
+        public override void DrawWith(Graphics g, Pen p)
+        {
+            g.DrawEllipse(p, C.X - this.Radius, C.Y - this.Radius, Radius * 2, Radius * 2);
+
+        }
+    }
 }

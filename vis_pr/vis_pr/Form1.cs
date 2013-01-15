@@ -23,7 +23,9 @@ namespace vis_pr
         Pen pTemp = new Pen(Color.Gray);
         Point xy_line_1 = new Point();
         Point xy_line_2 = new Point();
-        Boolean flg_line = false;
+        Boolean flg_fig = false;
+        Point Cen_okr = new Point();
+        Point xy_okr = new Point();
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -34,9 +36,9 @@ namespace vis_pr
             }
             if (radioButton2.Checked)
             {
-                if (!flg_line)
+                if (!flg_fig)
                 {
-                    flg_line = true;
+                    flg_fig = true;
                     xy_line_1.X = e.X;
                     xy_line_1.Y = e.Y;
                     addShape(tempShape);
@@ -44,9 +46,28 @@ namespace vis_pr
                 }
                 else
                 {
-                    flg_line = false;
+                    flg_fig = false;
                     xy_line_1.X = xy_line_2.X;
                     xy_line_1.Y = xy_line_2.Y;
+                    addShape(tempShape);
+                    Refresh();
+                }
+            }
+            if (radioButton3.Checked)
+            {
+                if (!flg_fig)
+                {
+                    flg_fig = true;
+                    Cen_okr.X = e.X;
+                    Cen_okr.Y = e.Y;
+                    addShape(tempShape);
+                    Refresh();
+                }
+                else
+                {
+                    flg_fig = false;
+                    Cen_okr.X = xy_okr.X;
+                    Cen_okr.Y = xy_okr.Y;
                     addShape(tempShape);
                     Refresh();
                 }
@@ -80,7 +101,7 @@ namespace vis_pr
             }
             if (radioButton2.Checked)
             {
-                if (flg_line)
+                if (flg_fig)
                 {
                     xy_line_2.X = e.X;
                     xy_line_2.Y = e.Y;
@@ -92,9 +113,24 @@ namespace vis_pr
                     xy_line_1.X = xy_line_2.X;
                     xy_line_1.Y = xy_line_2.Y;
                     tempShape = new Line(xy_line_1, xy_line_2);
-                    Refresh();
                 }
 
+            }
+            if (radioButton3.Checked)
+            {
+                if (flg_fig)
+                {
+                    xy_okr.X = e.X;
+                    xy_okr.Y = e.Y;
+                    tempShape = new Circle(Cen_okr, xy_okr);
+                    Refresh();
+                }
+                else
+                {
+                    Cen_okr.X = xy_okr.X;
+                    Cen_okr.Y = xy_okr.Y;
+                    tempShape = new Circle(Cen_okr, xy_okr);
+                }
             }
         }
     }
