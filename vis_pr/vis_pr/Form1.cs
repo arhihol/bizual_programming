@@ -86,14 +86,14 @@ namespace vis_pr
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-                if ((tempShape != null) && (!radioButton4.Checked))
-                {
-                    tempShape.DrawWith(e.Graphics, p_ris);
-                }
-                foreach (Shapes p in this.Shapes)
-                {
-                    p.DrawWith(e.Graphics, p_osn);
-                }
+            if ((tempShape != null) && (!radioButton4.Checked))
+            {
+                tempShape.DrawWith(e.Graphics, p_ris);
+            }
+            foreach (Shapes p in this.Shapes)
+            {
+                p.DrawWith(e.Graphics, p_osn);
+            }
             foreach (int i in shapesList.SelectedIndices)
             {
                 Shapes[i].DrawWith(e.Graphics, p_sel);
@@ -119,10 +119,6 @@ namespace vis_pr
                     tempShape = new Line(xy_old, e.Location);
                     Refresh();
                 }
-                else
-                {
-                    tempShape = new Line(xy_old, e.Location);
-                }
             }
             if (radioButton3.Checked)
             {
@@ -130,10 +126,6 @@ namespace vis_pr
                 {
                     tempShape = new Circle(xy_old, e.Location);
                     Refresh();
-                }
-                else
-                {
-                    tempShape = new Circle(xy_old, e.Location);
                 }
             }
         }
