@@ -34,28 +34,28 @@ namespace vis_pr
         Point Cen_okr = new Point();
         Point xy_okr = new Point();
 
-        //Point xy_sel = new Point();
-        //Boolean flg_sel = false;
-        //string[] st;
+        Point xy_sel_old = new Point();
+        Point xy_sel_new = new Point();
+
+        Boolean flg_sel = false;
+        Graphics gr;
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (radioButton1.Checked)
             {
-                //flg_sel = false;
+                flg_sel = false;
                 addShape(tempShape);
                 Refresh();
             }
             if (radioButton2.Checked)
             {
-                //flg_sel = false;
+                flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
                     xy_line_1.X = e.X;
                     xy_line_1.Y = e.Y;
-                    addShape(tempShape);
-                    Refresh();
                 }
                 else
                 {
@@ -68,14 +68,12 @@ namespace vis_pr
             }
             if (radioButton3.Checked)
             {
-                //flg_sel = false;
+                flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
                     Cen_okr.X = e.X;
                     Cen_okr.Y = e.Y;
-                    addShape(tempShape);
-                    Refresh();
                 }
                 else
                 {
@@ -86,42 +84,40 @@ namespace vis_pr
                     Refresh();
                 }
             }
-            //if (radioButton4.Checked)
-            //{
-            //    if (!flg_sel)
-            //    {
-            //        flg_sel = true;
-            //        xy_sel.X = e.X;
-            //        xy_sel.Y = e.Y;
-            //        String ss = Convert.ToString(xy_sel.X) + " " + Convert.ToString(xy_sel.Y);
-            //        textBox1.Text = ss;
-            //    }
-            //}
+            if (radioButton4.Checked)
+            {
+                if (flg_sel)
+                {
+                    flg_sel = true;
+                    xy_sel_old.X = e.X;
+                    xy_sel_old.Y = e.Y;
+                }
+                else
+                {
+                    flg_sel = false;
+                    xy_sel_old.X = xy_sel_new.X;
+                    xy_sel_old.Y = xy_sel_new.Y;
+                    foreach (Shapes t in this.Shapes)
+                    {
+                        if (t.IsNearTo(xy_sel_old))
+                        {
+                            t.DrawWith(gr, p_sel);
+                        }
+                    }
+                }
+            }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            if (tempShape != null)
-            {
-                tempShape.DrawWith(e.Graphics, p_ris);
-            }
-            foreach (Shapes p in this.Shapes)
-            {
-                p.DrawWith(e.Graphics, p_osn);                               
-            }
-            //if (flg_sel)
-            //{
-            //    foreach (Shapes t in this.Shapes)
-            //    {
-            //        t.DrawWith(e.Graphics, p_osn);
-            //        st = t.DescriptionString.Split(' ');
-            //        if ((Convert.ToInt32(st[1]) + 5 > xy_sel.X && Convert.ToInt32(st[1]) - 5 < xy_sel.X) && (Convert.ToInt32(st[3]) + 5 > xy_sel.Y && Convert.ToInt32(st[3]) - 5 < xy_sel.Y))
-            //        {
-            //            MessageBox.Show("true");
-            //            flg_sel = false;
-            //        }
-            //    }
-            //}
+                if ((tempShape != null) && (!radioButton4.Checked))
+                {
+                    tempShape.DrawWith(e.Graphics, p_ris);
+                }
+                foreach (Shapes p in this.Shapes)
+                {
+                    p.DrawWith(e.Graphics, p_osn);
+                }
             foreach (int i in shapesList.SelectedIndices)
             {
                 Shapes[i].DrawWith(e.Graphics, p_sel);
@@ -157,7 +153,6 @@ namespace vis_pr
                     xy_line_1.Y = xy_line_2.Y;
                     tempShape = new Line(xy_line_1, xy_line_2);
                 }
-
             }
             if (radioButton3.Checked)
             {
@@ -175,17 +170,11 @@ namespace vis_pr
                     tempShape = new Circle(Cen_okr, xy_okr);
                 }
             }
-            //if (radioButton4.Checked)
-            //{
-            //    if (!flg_sel)
-            //    {
-            //        flg_sel = true;
-            //        xy_sel.X = e.X;
-            //        xy_sel.Y = e.Y;
-            //        String ss = Convert.ToString(xy_sel.X) + " " + Convert.ToString(xy_sel.Y);
-            //        textBox1.Text = ss;
-            //    }
-            //}
+            if (radioButton4.Checked)
+            {
+                xy_sel_new.X = e.X;
+                xy_sel_new.Y = e.Y;
+            }
         }
 
         private void shapesList_SelectedValueChanged(object sender, EventArgs e)
@@ -256,6 +245,11 @@ namespace vis_pr
             shapesList.ClearSelected();
             shapesList.Items.Clear();
             Refresh();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            gr = Graphics.FromHwnd(this.Handle);
         }
     }
 }

@@ -13,6 +13,12 @@ namespace vis_pr
         public abstract string DescriptionString { get; }
         public abstract void DrawWith(Graphics g, Pen p);
         public abstract void Save(StreamWriter sv);
+        public abstract bool IsNearTo(Point D);
+
+        protected float getDistance(Point A, Point B)
+        {
+            return (float)Math.Sqrt(Math.Pow(A.X - B.X, 2) + Math.Pow(A.Y - B.Y, 2));
+        }
     }
 
     public class Cross : Shapes
@@ -50,6 +56,16 @@ namespace vis_pr
             string[] foo = line.Split(' ');
             XY.X = Convert.ToInt32(foo[0]);
             XY.Y = Convert.ToInt32(foo[1]);
+        }
+
+        public override bool IsNearTo(Point D)
+        {
+            Point tmpCross = new Point();
+            tmpCross.X = XY.X;
+            tmpCross.Y = XY.Y;
+
+            if (getDistance(D, tmpCross) <= 2) return true;
+            else return false;
         }
     }
 
@@ -95,12 +111,21 @@ namespace vis_pr
             B.X = Convert.ToInt32(foo[0]);
             B.Y = Convert.ToInt32(foo[1]);
         }
+
+        public override bool IsNearTo(Point D)
+        {
+            float AD = getDistance(A, D);
+            float BD = getDistance(B, D);
+            float AB = getDistance(A, B);
+
+            if (((AD + BD) - AB) <= 1) return true;
+            else return false;
+        }
     }
 
     class Circle : Shapes
     {
         private Point C, R;
-        Pen p = new Pen(Color.Black);
 
         public override string DescriptionString
         {
@@ -145,6 +170,13 @@ namespace vis_pr
             foo = circle.Split(' ');
             R.X = Convert.ToInt32(foo[0]);
             R.Y = Convert.ToInt32(foo[1]);
+        }
+
+        public override bool IsNearTo(Point D)
+        {
+            float CA = getDistance(C,D);
+            if (Math.Abs(CA - this.Radius) <= 3) return true;
+                else return false;
         }
     }
 }
