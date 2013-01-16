@@ -24,12 +24,11 @@ namespace vis_pr
         Pen p_ris = new Pen(Color.Gray);
         Pen p_sel = new Pen(Color.Red);
 
-        Point xy = new Point();
-
         Point xy_line_1 = new Point();
         Point xy_line_2 = new Point();
 
         Boolean flg_fig = false;
+        Boolean flg_sel = false;
 
         Point Cen_okr = new Point();
         Point xy_okr = new Point();
@@ -37,49 +36,41 @@ namespace vis_pr
         Point xy_sel_old = new Point();
         Point xy_sel_new = new Point();
 
-        Boolean flg_sel = false;
         Graphics gr;
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (radioButton1.Checked)
             {
-                flg_sel = false;
                 addShape(tempShape);
                 Refresh();
             }
             if (radioButton2.Checked)
             {
-                flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
-                    xy_line_1.X = e.X;
-                    xy_line_1.Y = e.Y;
+                    xy_line_1 = e.Location;
                 }
                 else
                 {
                     flg_fig = false;
-                    xy_line_1.X = xy_line_2.X;
-                    xy_line_1.Y = xy_line_2.Y;
+                    xy_line_1 = xy_line_2;
                     addShape(tempShape);
                     Refresh();
                 }
             }
             if (radioButton3.Checked)
             {
-                flg_sel = false;
                 if (!flg_fig)
                 {
                     flg_fig = true;
-                    Cen_okr.X = e.X;
-                    Cen_okr.Y = e.Y;
+                    Cen_okr = e.Location;
                 }
                 else
                 {
                     flg_fig = false;
-                    Cen_okr.X = xy_okr.X;
-                    Cen_okr.Y = xy_okr.Y;
+                    Cen_okr = xy_okr;
                     addShape(tempShape);
                     Refresh();
                 }
@@ -89,14 +80,12 @@ namespace vis_pr
                 if (flg_sel)
                 {
                     flg_sel = true;
-                    xy_sel_old.X = e.X;
-                    xy_sel_old.Y = e.Y;
+                    xy_sel_old = e.Location;
                 }
                 else
                 {
                     flg_sel = false;
-                    xy_sel_old.X = xy_sel_new.X;
-                    xy_sel_old.Y = xy_sel_new.Y;
+                    xy_sel_old = xy_sel_new;
                     foreach (Shapes t in this.Shapes)
                     {
                         if (t.IsNearTo(xy_sel_old))
@@ -134,46 +123,37 @@ namespace vis_pr
         {
             if (radioButton1.Checked)
             {
-                xy.X = e.X;
-                xy.Y = e.Y;
-                tempShape = new Cross(xy);
+                tempShape = new Cross(e.Location);
             }
             if (radioButton2.Checked)
             {
                 if (flg_fig)
                 {
-                    xy_line_2.X = e.X;
-                    xy_line_2.Y = e.Y;
-                    tempShape = new Line(xy_line_1, xy_line_2);
+                    tempShape = new Line(xy_line_1, e.Location);
                     Refresh();
                 }
                 else
                 {
-                    xy_line_1.X = xy_line_2.X;
-                    xy_line_1.Y = xy_line_2.Y;
-                    tempShape = new Line(xy_line_1, xy_line_2);
+                    xy_line_1 = xy_line_2;
+                    tempShape = new Line(xy_line_1, e.Location);
                 }
             }
             if (radioButton3.Checked)
             {
                 if (flg_fig)
                 {
-                    xy_okr.X = e.X;
-                    xy_okr.Y = e.Y;
-                    tempShape = new Circle(Cen_okr, xy_okr);
+                    tempShape = new Circle(Cen_okr, e.Location);
                     Refresh();
                 }
                 else
                 {
-                    Cen_okr.X = xy_okr.X;
-                    Cen_okr.Y = xy_okr.Y;
-                    tempShape = new Circle(Cen_okr, xy_okr);
+                    Cen_okr = xy_okr;
+                    tempShape = new Circle(Cen_okr, e.Location);
                 }
             }
             if (radioButton4.Checked)
             {
-                xy_sel_new.X = e.X;
-                xy_sel_new.Y = e.Y;
+                xy_sel_new = e.Location;
             }
         }
 

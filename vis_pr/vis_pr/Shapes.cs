@@ -61,8 +61,7 @@ namespace vis_pr
         public override bool IsNearTo(Point D)
         {
             Point tmpCross = new Point();
-            tmpCross.X = XY.X;
-            tmpCross.Y = XY.Y;
+            tmpCross = XY;
 
             if (getDistance(D, tmpCross) <= 2) return true;
             else return false;
