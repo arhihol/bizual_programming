@@ -24,17 +24,9 @@ namespace vis_pr
         Pen p_ris = new Pen(Color.Gray);
         Pen p_sel = new Pen(Color.Red);
 
-        Point xy_line_1 = new Point();
-        Point xy_line_2 = new Point();
-
         Boolean flg_fig = false;
-        Boolean flg_sel = false;
 
-        Point Cen_okr = new Point();
-        Point xy_okr = new Point();
-
-        Point xy_sel_old = new Point();
-        Point xy_sel_new = new Point();
+        Point xy_old = new Point();
 
         Graphics gr;
 
@@ -50,12 +42,11 @@ namespace vis_pr
                 if (!flg_fig)
                 {
                     flg_fig = true;
-                    xy_line_1 = e.Location;
+                    xy_old = e.Location;
                 }
                 else
                 {
                     flg_fig = false;
-                    xy_line_1 = xy_line_2;
                     addShape(tempShape);
                     Refresh();
                 }
@@ -65,30 +56,26 @@ namespace vis_pr
                 if (!flg_fig)
                 {
                     flg_fig = true;
-                    Cen_okr = e.Location;
+                    xy_old = e.Location;
                 }
                 else
                 {
                     flg_fig = false;
-                    Cen_okr = xy_okr;
                     addShape(tempShape);
                     Refresh();
                 }
             }
             if (radioButton4.Checked)
             {
-                if (flg_sel)
+                if (flg_fig)
                 {
-                    flg_sel = true;
-                    xy_sel_old = e.Location;
+                    xy_old = e.Location;
                 }
                 else
                 {
-                    flg_sel = false;
-                    xy_sel_old = xy_sel_new;
                     foreach (Shapes t in this.Shapes)
                     {
-                        if (t.IsNearTo(xy_sel_old))
+                        if (t.IsNearTo(e.Location))
                         {
                             t.DrawWith(gr, p_sel);
                         }
@@ -129,31 +116,25 @@ namespace vis_pr
             {
                 if (flg_fig)
                 {
-                    tempShape = new Line(xy_line_1, e.Location);
+                    tempShape = new Line(xy_old, e.Location);
                     Refresh();
                 }
                 else
                 {
-                    xy_line_1 = xy_line_2;
-                    tempShape = new Line(xy_line_1, e.Location);
+                    tempShape = new Line(xy_old, e.Location);
                 }
             }
             if (radioButton3.Checked)
             {
                 if (flg_fig)
                 {
-                    tempShape = new Circle(Cen_okr, e.Location);
+                    tempShape = new Circle(xy_old, e.Location);
                     Refresh();
                 }
                 else
                 {
-                    Cen_okr = xy_okr;
-                    tempShape = new Circle(Cen_okr, e.Location);
+                    tempShape = new Circle(xy_old, e.Location);
                 }
-            }
-            if (radioButton4.Checked)
-            {
-                xy_sel_new = e.Location;
             }
         }
 
